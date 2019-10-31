@@ -1,6 +1,7 @@
 const express = require('express');
 const config = require('./config/config');
 const morgan = require('morgan');
+const cors =require('cors');
 const app = express();
 // Database
 require('./database/database');
@@ -9,6 +10,10 @@ require('./database/database');
 //Middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+// CORS middleware
+app.use(cors({
+    origin: 'http://localhost:3000'
+  }));
 
 //debugging
 app.use(morgan('dev'));
