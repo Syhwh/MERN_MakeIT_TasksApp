@@ -63,15 +63,14 @@ router.patch('/task/:id', async (req, res) => {
 
 router.patch('/task/status/:id', async (req, res) => {
   const { id } = req.params;
-  const {done}=req.body;
-  console.log(done)
+  const { done } = req.body;
   try {
     await Task.updateOne({ _id: id }, {
-            done: done
+      done: done
     })
-    
     res.status(200).json({
-      message: 'Task Status Updated'})
+      message: 'Task Status Updated'
+    })
   } catch (error) {
     res.status(401).json(error)
   }

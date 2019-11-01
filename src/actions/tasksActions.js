@@ -5,7 +5,7 @@ import { GET_TASKS, POST_TASKS, EDIT_TASKS, DELETE_TASKS, IS_EDITING, TOGGLE_DON
 export function getTasks() { // export const gettasks=()=>dispatch=>{}
   return function (dispatch) {
     tasksApi.get('/')
-      .then(({ data }) => {        
+      .then(({ data }) => {
         dispatch({
           type: GET_TASKS,
           payload: data
@@ -60,7 +60,7 @@ export function isEditig(id) {
 
 export function toggleDoneTask(id, done) {
   return function (dispatch) {
-    tasksApi.patch(`/task/status/${id}`, {done:!done})
+    tasksApi.patch(`/task/status/${id}`, { done: !done })
       .then(() => {
         dispatch({
           type: TOGGLE_DONE_TASKS,

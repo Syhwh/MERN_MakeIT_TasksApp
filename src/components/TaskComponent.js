@@ -13,7 +13,6 @@ function TaskComponent({ title, description, id, done, deleteTasks, isEditig, to
   }
 
   const handleToggleDone = (id, done) => {
-    console.log(!done)
     toggleDoneTask(id, done)
   }
 
