@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getTasks } from '../actions/tasksActions';
-import TaskComponent from '../components/TaskComponent';
+import TaskComponent from './TaskComponent';
 
 function ShowTasksComponent({ tasks, getTasks }) {
 
@@ -12,22 +12,23 @@ function ShowTasksComponent({ tasks, getTasks }) {
 
   return (
     <div >
-       <ul>
-      {tasks.length > 0 && tasks.map(({ _id, title, description }) =>
-        (
-         <TaskComponent key={_id}
-         id={_id} 
-         title={title} 
-         description={description} />
-        ))}
-    </ul>
+      <ul>
+        {tasks.length > 0 && tasks.map(({ _id, title, description, done }) =>
+          (
+            <TaskComponent key={_id}
+              id={_id}
+              title={title}
+              description={description}
+              done={done} />
+          ))}
+      </ul>
     </div>
   )
 }
 
 const mapStateToProps = (store) => {
   return {
-    tasks: store.getTasks.tasks,
+    tasks: store.tasks.tasks,
   }
 }
 

@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { postTasks } from '../actions/tasksActions'
+import { postTasks, editTasks } from '../actions/tasksActions'
 
 
-function TaskFormComponent({postTasks}) {
-  const [task, newTask] = useState([{ title: '', description: '' }])
+function TaskFormComponent({ postTasks, edit, taskToEdit, editTasks }) {
+  const [task, newTask] = useState('')
+
+  useEffect(() => {
+    if (edit) {
+      newTask({
+        ...task,
+        _id: taskToEdit._id,
+        title: taskToEdit.title,
+        description: taskToEdit.description
+      });
+    }
+  }, [edit]);
 
   const updateField = e => {
     newTask({
@@ -15,7 +26,16 @@ function TaskFormComponent({postTasks}) {
 
   const handleOnSubmit = (e) => {
     e.preventDefault()
-    postTasks(task)
+    if (edit) {
+      editTasks(task)     
+    } else {
+      postTasks(task)
+    }
+    newTask({
+      ...task,
+      title:'',
+      description:''
+    })
   }
 
   return (
@@ -39,13 +59,18 @@ function TaskFormComponent({postTasks}) {
             name='description'
             value={task.description}
             onChange={updateField}
-          /> 
+          />
         </div>
         <button type='submit'> save task </button>
       </form>
     </div>
   )
 }
+const mapStateToProps = (store) => {
+  return {
+    edit: store.tasks.edit,
+    taskToEdit: store.tasks.task[0]
+  }
+}
 
-export default connect(null, { postTasks })(TaskFormComponent)
-//export default TaskFormComponent
+export default connect(mapStateToProps, { postTasks, editTasks })(TaskFormComponent)
